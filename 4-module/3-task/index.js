@@ -7,7 +7,8 @@ function highlight(table) {
      } else if (statusCell.dataset.available == 'false') {
       row.classList.add('unavailable')
     } else {
-      row.setAttribute('hidden', true)
+      row.hidden = true
+      // забыл про Ваш совет...
     }
     if (genderCell.textContent == 'm') {
       row.classList.add('male')
