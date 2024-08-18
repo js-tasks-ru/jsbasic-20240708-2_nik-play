@@ -101,30 +101,31 @@ export default class Carousel {
   this.arrowLeft = this.elem.querySelector('.carousel__arrow_left');
   this.arrowRight = this.elem.querySelector('.carousel__arrow_right');
   let innerCarousel = this.elem.querySelector('.carousel__inner');
-  let carouselWidth = 500; //можно ведь задать заранее значение, если через offsetWidth нельзя?
+  let carouselWidth;
   this.currentSlide = 0;
   this.currentIndex = 0;
   
   this.arrowLeft.style.display = 'none';  
   
   this.arrowRight.addEventListener('click', () => {
-    this.currentSlide += carouselWidth;
-      this.currentIndex++;
+    this.carouselWidth = innerCarousel.offsetWidth
+    this.currentSlide += this.carouselWidth;
+    this.currentIndex++;
   
-      innerCarousel.style.transform = `translateX(-${this.currentSlide}px)`
-      this.updateArrowsVisibility()
-      })
+    innerCarousel.style.transform = `translateX(-${this.currentSlide}px)`
+    this.updateArrowsVisibility()
+    })
   
-      this.arrowLeft.addEventListener('click', () => {
-        this.currentSlide -= carouselWidth;
-      this.currentIndex--;
+  this.arrowLeft.addEventListener('click', () => {
+    this.currentSlide -= this.carouselWidth;
+     this.currentIndex--;
   
-      innerCarousel.style.transform = `translateX(-${this.currentSlide}px)`
-      this.updateArrowsVisibility()
-      })
-
+  innerCarousel.style.transform = `translateX(-${this.currentSlide}px)`
+     this.updateArrowsVisibility()
+    })
       }
-      updateArrowsVisibility() {
+
+  updateArrowsVisibility() {
         if (this.currentIndex === 0) {
           this.arrowLeft.style.display ='none'
         } else this.arrowLeft.style.display = ''
