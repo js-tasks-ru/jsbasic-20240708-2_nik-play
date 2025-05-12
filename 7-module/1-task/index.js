@@ -6,13 +6,10 @@ const LeftRibon = createElement(`
     </button>
 `)
 
-
-
 const RightRibon = createElement(`
       <button class="ribbon__arrow ribbon__arrow_right">
       <img src="/assets/images/icons/angle-icon.svg" alt="icon">
     </button>
-  </div>
   `)
 
 export default class RibbonMenu {
@@ -30,50 +27,38 @@ export default class RibbonMenu {
 scrollInner () {
   let navInner = document.createElement("nav");
   navInner.classList.add('ribbon__inner');
-  let activeElement = null;
 
     for (let category of this.categories) {
 
       let a = document.createElement("a");
-      a.href = "#"
-      a.classList.add('ribbon__item')
-      a.dataset.id = category.id
-      a.textContent = category.name
+      a.href = "#";
+      a.classList.add('ribbon__item');
+      a.dataset.id = category.id;
+      a.textContent = category.name;
 
     let ce = new CustomEvent('ribbon-select', { 
       detail: category.id, 
       bubbles: true    
   })
   a.addEventListener('click', (ev) => {
+    ev.preventDefault()
 
-    ev.preventDefault
-
-    if (category.id != '') {
-
-      a.classList.add('ribbon__item_active')
-      activeElement = a
-      a.dispatchEvent(ce)
-
-    } else if (category.id == '') {
-
-      this.activateAllItems(navInner)
-
-    }
+    navInner.querySelectorAll('a').forEach(item => {
+      item.classList.remove('ribbon__item_active')
+    })
+    a.classList.add('ribbon__item_active');
+    a.dispatchEvent(ce);
 })
 
   navInner.appendChild(a)
+
+  let allButtons = navInner.querySelectorAll('a');
+  allButtons[0].classList.add('ribbon__item_active')
 }
+
 this.elem.appendChild(navInner)
-
   }
 
-  activateAllItems(navInner) {
-    let items = navInner.children;
-    for (let i = 0; i < items.length; i++) {
-      if (i != 0)
-      items[i].classList.add('ribbon__item_active');
-    }
-  }
 
   Scrolling() {
     this.arrowRight = this.elem.querySelector('.ribbon__arrow_right')
@@ -83,20 +68,16 @@ this.elem.appendChild(navInner)
     this.ribbonInner = this.elem.querySelector('.ribbon__inner')
 
     this.arrowRight.addEventListener('click', () => {
-      
       this.ribbonInner.scrollBy(350, 0)
-
     })
 
     this.arrowLeft.addEventListener('click', () => {
-  
       this.ribbonInner.scrollBy(-350, 0)
-
     })
-
+    
     this.ribbonInner.addEventListener('scroll', () => {
-      this.updateScrollVisibility()
-    })
+      this.updateScrollVisibility();
+    });
   }
 
   updateScrollVisibility() {
